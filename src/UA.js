@@ -616,6 +616,7 @@ UA.prototype.receiveRequest = function(request) {
       'Allow: '+ SIP.UA.C.ALLOWED_METHODS.toString(),
       'Accept: '+ C.ACCEPTED_BODY_TYPES
     ]);
+    this.emit('options');
   } else if (method === SIP.C.MESSAGE) {
     message = new SIP.ServerContext(this, request);
     message.body = request.body;
