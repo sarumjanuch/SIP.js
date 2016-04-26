@@ -80,7 +80,7 @@ MediaStreamManager.render = function render (streams, elements) {
     }
     var element = elements[index % elements.length];
     (environment.attachMediaStream || attachMediaStream)(element, stream);
-    ensureMediaPlaying(element);
+    //ensureMediaPlaying(element);
   }
 
   // [].concat "casts" `elements` into an array
