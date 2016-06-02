@@ -502,6 +502,8 @@ Session.prototype = {
 
       // Don't receive media
       // TODO - This will break for media streams with different directions.
+      body = body.replace(/a=setup:passive\r\n/g, 'a=setup:actpass\r\n');
+      body = body.replace(/a=setup:active\r\n/g, 'a=setup:actpass\r\n')
       if (!(/a=(sendrecv|sendonly|recvonly|inactive)/).test(body)) {
         body = body.replace(/(m=[^\r]*\r\n)/g, '$1a=sendonly\r\n');
       } else {
@@ -512,7 +514,7 @@ Session.prototype = {
       return body;
     };
 
-    this.sendReinvite(options);
+    this.sendReinvite(options, 'createOffer');
   },
 
   /**
@@ -543,7 +545,7 @@ Session.prototype = {
 
     this.onunhold('local');
 
-    this.sendReinvite(options);
+    this.sendReinvite(options, 'createOffer');
   },
 
   /**
@@ -611,7 +613,7 @@ Session.prototype = {
     });
   },
 
-  sendReinvite: function(options) {
+  sendReinvite: function(options, forceMethod) {
     options = options || {};
 
     var
@@ -642,7 +644,7 @@ Session.prototype = {
 
     this.receiveResponse = this.receiveReinviteResponse;
     //REVISIT
-    this.mediaHandler.getDescription(self.mediaHint)
+    this.mediaHandler.getDescription(self.mediaHint, forceMethod)
     .then(mangle)
     .then(
       function(body){
