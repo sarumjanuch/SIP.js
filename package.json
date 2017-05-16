@@ -50,6 +50,7 @@
     "test": "grunt travis --verbose"
   },
   "dependencies": {
+    "traceablepeerconnection": "1.2.1",
     "ws": "^0.6.4"
   },
   "optionalDependencies": {
